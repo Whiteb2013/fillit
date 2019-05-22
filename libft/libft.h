@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 17:38:44 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/04/21 23:52:48 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/05/01 21:36:46 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct		s_list
 {
 	void			*content;
 	size_t			content_size;
+	int				fd;
 	struct s_list	*next;
 }					t_list;
 
@@ -68,7 +69,7 @@ char				*ft_strtrim(char const *s);
 char				*ft_strtrimi(char const *s, char c);
 size_t				ft_strwordcounter(const char *s, char c);
 size_t				ft_strwordsize(const char *s, char c);
-char				**ft_strclean(char **str, size_t len);
+char				**ft_strclean(char **str, int len);
 char				**ft_strsplit(char const *s, char c);
 char				*ft_itoa(int n);
 void				ft_putchar(char c);
@@ -79,7 +80,8 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
-t_list				*ft_lstnew(void const *content, size_t content_size);
+t_list				*ft_lstnew(void const *content, size_t content_size, \
+		int fd);
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstadd(t_list **alst, t_list *new);

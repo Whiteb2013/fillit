@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strclean.c                                      :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/20 01:14:04 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/04/20 01:25:54 by lgeorgin         ###   ########.fr       */
+/*   Created: 2019/04/21 21:21:52 by lgeorgin          #+#    #+#             */
+/*   Updated: 2019/05/22 21:48:14 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+# define BUFF_SIZE 32
 
-char	**ft_strclean(char **str, int len)
-{
-	int	i;
+# include "../libft/libft.h"
 
-	i = 0;
-	if (!str)
-		return (NULL);
-	while (i < len)
-		ft_strdel(&str[i++]);
-	ft_strdel(str);
-	return (str);
-}
+int		get_next_line(const int fd, char **line);
+
+#endif

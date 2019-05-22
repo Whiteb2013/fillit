@@ -6,13 +6,13 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 19:57:19 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/04/15 20:46:59 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/05/03 19:22:41 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void const *content, size_t content_size)
+t_list	*ft_lstnew(void const *content, size_t content_size, int fd)
 {
 	t_list	*tmp;
 
@@ -33,6 +33,7 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 	else
 		tmp->content = NULL;
 	tmp->content_size = content_size;
+	tmp->fd = fd;
 	tmp->next = NULL;
 	return (tmp);
 }
