@@ -6,7 +6,7 @@
 #    By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/06 17:22:11 by lgeorgin          #+#    #+#              #
-#    Updated: 2019/05/25 18:31:12 by lgeorgin         ###   ########.fr        #
+#    Updated: 2019/06/12 15:24:25 by lgeorgin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,14 +27,15 @@ SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 	  ft_strtrimi.c ft_strclean.c ft_strwordcounter.c ft_strwordsize.c \
 	  ft_strndup.c get_next_line.c
 
-HEAD = libft.h get_next_line.h
+HEAD = libft.h
+HEAD2 = get_next_line.h
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME):
-	@gcc -I $(HEAD) -c $(SRC) -Wall -Wextra -Werror
+	@gcc -I $(HEAD) -I $(HEAD2) -c $(SRC) -Wall -Wextra -Werror
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 

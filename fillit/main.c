@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 21:36:25 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/05/25 19:10:02 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/13 22:47:40 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,11 @@ int		main(int argc, char **argv)
 	else
 	{
 		if ((fd = open(argv[1], O_RDONLY)) < 1)
-			return (0);
+			return (ft_error_display(0));
+		if (!(root = (t_dlx *)ft_memalloc(sizeof(t_dlx))))
+			return (ft_error_display(0));
 		line = NULL;
 		line_counter = 0;
-		if (!(root = (t_dlx *)ft_memalloc(sizeof(t_dlx))))
-		{
-			ft_putendl("error");
-			return (0);
-		}
 		c = 'A';
 		while (get_next_line(fd, &line) > 0)
 		{
@@ -48,19 +45,15 @@ int		main(int argc, char **argv)
 			if (ft_strlen(line))
 			{
 				if (!(line_counter % 4))
-				{
 					if (!create_dlx_node(&root, c++))
-					{
-						ft_putendl("error");
-						return (0);
-					}
-				}
+						return (ft_error_display(0));
+				//printf("Filling node %p\n", root);
 				fill_dlx_node(&root, line, line_counter % 4);
 				line_counter++;
 			}
 			ft_strdel(&line);
 		}
-		printf("|x = %zu|y = %zu\n", root->pos.x[3], root->pos.y[3]);
+		//1)calculate estimated square 2)try to resolve 3)print on screen
 		/*show_square(root);*/
 	}
 	return (0);

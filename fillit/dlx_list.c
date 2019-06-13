@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:26:52 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/05/25 19:09:58 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/13 22:47:37 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,23 @@ t_dlx	**create_dlx_node(t_dlx **root, char c)
 {
 	t_dlx	*tmp;
 
+	if (!root)
+		return (NULL);
+	while ((*root)->right)
+		*root = (*root)->right;
 	if (!(tmp = (t_dlx *)ft_memalloc(sizeof(t_dlx))))
 		return (NULL);
 	tmp->right = NULL;
 	tmp->down = NULL;
 	tmp->up = NULL;
-	if (!(tmp->pos.x = (size_t *)ft_memalloc(sizeof(size_t *) * 4)) || \
-			!(tmp->pos.y = (size_t *)ft_memalloc(sizeof(size_t *) * 4)))
-		return (NULL);
 	tmp->pos.letter = c;
 	tmp->pos.amount = 0;
-	printf("Amount = %zu\n", tmp->pos.amount);
-	if (!root)
-		return (NULL);
-	printf("%p\n", *root);
-	while ((*root)->right)
-		*root = (*root)->right;
 	(*root)->right = tmp;
 	tmp->left = *root;
 	return (root);
 }
 
-void	fill_dlx_node(t_dlx **root, char *s, size_t	y)
+void	fill_dlx_node(t_dlx **root, char *s, size_t y)
 {
 	size_t	i;
 
@@ -52,5 +47,10 @@ void	fill_dlx_node(t_dlx **root, char *s, size_t	y)
 			(*root)->pos.amount++;
 		}
 		i++;
+	}
+	if ((*root)->pos.amount == 4)
+	{
+		move_top(root);
+		move_left(root);
 	}
 }
