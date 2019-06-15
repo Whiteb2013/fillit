@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 21:50:51 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/15 17:55:20 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/15 20:22:40 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,52 @@ size_t	dlx_size(t_dlx **root)
 int		gen_dlx_options(t_dlx **root, size_t square)
 {
 	t_dlx	*tmp;
+	t_dlx	*tmp2;
 	int 	res;
+	size_t	i = 0;
+	size_t	x = 0;
+	size_t	y = 0;
+	size_t	pointer = 0;
 
 	tmp = *root;
-	//find out, why last tmp has right link. Should be while (tmp) instead
-	while (tmp->right)
+	while (tmp)
 	{
-		printf("Listing %p", tmp);
+		printf("New tetrimino %p\n", tmp);
 		while ((res = create_dlx_node_down(tmp, square)) > 0)
 			;
 		if (res < 0)
 			return (0);
+		//printing to check
+		tmp2 = tmp;
+		while (tmp2)
+		{
+			y = 0;
+			while (y < square)
+			{
+				x = 0;
+				while (x < square)
+				{
+					i = 0;
+					pointer = 0;
+					while (i < 4)
+					{
+						if (tmp2->pos.x[i] == x && tmp2->pos.y[i] == y)
+							pointer = 1;
+						i++;
+					}
+					if (!pointer)
+						printf(".");
+					else
+						printf("#");
+					x++;
+				}
+				printf("\n");
+				y++;
+			}
+			printf("\n");
+			tmp2 = tmp2->down;
+		}
+		//till here
 		tmp = tmp->right;
 	}
 	return (1);
@@ -48,12 +83,8 @@ int		gen_dlx_options(t_dlx **root, size_t square)
 int		show_square(t_dlx **root)
 {
 	size_t min_square;
-	size_t size;
 
-	size = dlx_size(root);
-	printf("Size = %zu\n", size);
-	min_square = ft_sqrt_plus(size * 4);	
-	printf("min_square = %zu\n", min_square);
+	min_square = ft_sqrt_plus(dlx_size(root) * 4);	
 	if (!gen_dlx_options(root, min_square))
 		return (ft_error_display(0));
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:26:52 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/15 17:55:11 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/15 20:22:42 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 int		create_dlx_node_down(t_dlx *node, size_t square)
 {
 	t_dlx	*tmp;
-	size_t	i;
+	int		i;
 	int		offset;
 
 	tmp = node;
-	i = 0;
-	if (!(offset = square_checker(tmp, square)))
-		return (0);
+	i = 4;
 	while (tmp->down)
 		tmp = tmp->down;
+	if (!(offset = square_checker(tmp, square)))
+		return (0);
 	if (!(tmp->down = (t_dlx *)ft_memalloc(sizeof(t_dlx))))
 		return (-1);
 	tmp->down->right = NULL;
@@ -33,12 +33,18 @@ int		create_dlx_node_down(t_dlx *node, size_t square)
 	tmp->down->square = square;
 	if (offset == 2)
 		while (i-- > 0)
+		{
+			tmp->down->pos.y[i] = tmp->pos.y[i];
 			tmp->down->pos.x[i] = tmp->pos.x[i] + 1;
+		}
 	else if (offset == 1)
 	{
-		move_left(&tmp->down);
 		while (i-- > 0)
+		{
+			tmp->down->pos.x[i] = tmp->pos.x[i];
 			tmp->down->pos.y[i] = tmp->pos.y[i] + 1;
+		}
+		move_left(&tmp->down);
 	}
 	return (1);
 }
@@ -47,19 +53,23 @@ t_dlx	**create_dlx_node(t_dlx **root, char c)
 {
 	t_dlx	*tmp;
 
-	if (!root)
-		return (NULL);
-	while ((*root)->right)
-		*root = (*root)->right;
 	if (!(tmp = (t_dlx *)ft_memalloc(sizeof(t_dlx))))
 		return (NULL);
 	tmp->right = NULL;
 	tmp->down = NULL;
 	tmp->up = NULL;
 	tmp->pos.letter = c;
-	tmp->pos.amount = 0;
-	(*root)->right = tmp;
-	tmp->left = *root;
+	tmp->pos.amount = 0;	
+	if (!*root)
+		*root = tmp;
+	else
+	{
+		while ((*root)->right)
+			*root = (*root)->right;	
+		tmp->left = *root;
+		(*root)->right = tmp;
+		*root = (*root)->right;
+	}
 	return (root);
 }
 

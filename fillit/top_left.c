@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 22:06:54 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/15 17:55:17 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/15 20:22:45 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,19 @@ int		square_checker(t_dlx *node, size_t square)
 	offset = 2;
 	while (i < 4 && offset != 1)
 	{
-		if (node->pos.x[i++] + 1 >= square)
+		if (node->pos.x[i] + 1 >= square)
 		{
 			i = 0;
 			offset = 1;
 		}
+		i++;
 	}
 	while (i < 4)
-		if (node->pos.y[i++] + 1 >= square)
+	{
+		if (node->pos.y[i] + 1 >= square)
 			return (0);
+		i++;
+	}
 	return (offset);
 }
 
