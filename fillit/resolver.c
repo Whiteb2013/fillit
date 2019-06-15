@@ -5,41 +5,56 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/13 22:06:54 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/13 22:42:53 by lgeorgin         ###   ########.fr       */
+/*   Created: 2019/06/14 21:50:51 by lgeorgin          #+#    #+#             */
+/*   Updated: 2019/06/15 17:55:20 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include <stdio.h>
 
-void	move_top(t_dlx **root)
-{
-	size_t i;
+size_t	dlx_size(t_dlx **root)
+{	
+	size_t size;
 
-	if ((*root)->pos.y[0])
-	{
-		i = 0;
-		while (i < 4)
-		{
-			(*root)->pos.y[i]--;
-			i++;
-		}
-		move_top(root);
-	}
+	size = 0;
+	while ((*root)->left)
+	{	
+		size++;
+		*root = (*root)->left;
+	}	
+	return (size + 1);
 }
 
-void	move_left(t_dlx **root)
+int		gen_dlx_options(t_dlx **root, size_t square)
 {
-	size_t i;
+	t_dlx	*tmp;
+	int 	res;
 
-	i = 0;
-	while (i < 4)
+	tmp = *root;
+	//find out, why last tmp has right link. Should be while (tmp) instead
+	while (tmp->right)
 	{
-		if (!(*root)->pos.x[i])
-			return ;
-		i++;
+		printf("Listing %p", tmp);
+		while ((res = create_dlx_node_down(tmp, square)) > 0)
+			;
+		if (res < 0)
+			return (0);
+		tmp = tmp->right;
 	}
-	while (i-- > 0)
-		(*root)->pos.x[i]--;
-	move_left(root);
+	return (1);
+}
+
+int		show_square(t_dlx **root)
+{
+	size_t min_square;
+	size_t size;
+
+	size = dlx_size(root);
+	printf("Size = %zu\n", size);
+	min_square = ft_sqrt_plus(size * 4);	
+	printf("min_square = %zu\n", min_square);
+	if (!gen_dlx_options(root, min_square))
+		return (ft_error_display(0));
+	return (1);
 }

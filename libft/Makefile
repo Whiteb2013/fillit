@@ -6,7 +6,7 @@
 #    By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/06 17:22:11 by lgeorgin          #+#    #+#              #
-#    Updated: 2019/06/12 15:24:25 by lgeorgin         ###   ########.fr        #
+#    Updated: 2019/06/15 16:14:17 by lgeorgin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 	  ft_putendl_fd.c ft_putnbr_fd.c ft_lstnew.c ft_lstdelone.c \
 	  ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c ft_strncat.c \
 	  ft_strtrimi.c ft_strclean.c ft_strwordcounter.c ft_strwordsize.c \
-	  ft_strndup.c get_next_line.c
+	  ft_strndup.c get_next_line.c ft_sqrt.c
 
 HEAD = libft.h
 HEAD2 = get_next_line.h

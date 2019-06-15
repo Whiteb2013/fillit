@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 17:38:44 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/05/01 21:36:46 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/15 16:13:49 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 char				*ft_strndup(const char *s1, size_t n);
+size_t				ft_sqrt_plus(size_t nb);
 
 #endif

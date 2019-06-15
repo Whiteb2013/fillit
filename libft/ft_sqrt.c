@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_sqrt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/13 21:28:39 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/15 13:22:03 by lgeorgin         ###   ########.fr       */
+/*   Created: 2019/06/15 16:06:00 by lgeorgin          #+#    #+#             */
+/*   Updated: 2019/06/15 16:56:43 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include "libft.h"
 
-int		ft_error_display(int error)
+size_t		ft_sqrt_plus(size_t nb)
 {
-	if (error == 0)
-		ft_putendl("error");
-	return (0);
+	size_t	i;
+
+	i = 1;
+	while (i * i < nb)
+		i++;
+	return (i);
 }
