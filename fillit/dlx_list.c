@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:26:52 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/15 20:22:42 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/20 23:11:24 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		create_dlx_node_down(t_dlx *node, size_t square)
 		return (0);
 	if (!(tmp->down = (t_dlx *)ft_memalloc(sizeof(t_dlx))))
 		return (-1);
-	tmp->down->right = NULL;
+	tmp->down->right = tmp->right;
 	tmp->down->left = NULL;
 	tmp->down->down = NULL;
 	tmp->down->up = tmp;
