@@ -6,14 +6,36 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 21:36:25 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/15 20:23:20 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/21 23:53:35 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include <stdio.h>
 
-void	print(t_dlx *root)
+void	show_square(t_dlx **root)
 {
+	char	*map;
+	size_t	i;
+
+	i = 0;
+	map = ft_strnew(((*root)->square + 1) * (*root)->square);
+	ft_memset(map, '.', ((*root)->square + 1) * (*root)->square);
+	while (i < ((*root)->square + 1) * (*root)->square)
+	{
+		if (!((i + 1) % ((*root)->square + 1)))
+			map[i] = '\n';
+		i++;
+	}
+	while (*root)
+	{	
+		i = 4;
+		while (i-- > 0)
+			map[((*root)->pos.y[i] * ((*root)->square + 1)) + (*root)->pos.x[i]] = (*root)->pos.letter;	
+		printf("Current %p %c\n", *root, (*root)->pos.letter);
+		*root = (*root)->left;
+	}
+	ft_putstr(map);
 }
 
 int		main(int argc, char **argv)
@@ -51,8 +73,11 @@ int		main(int argc, char **argv)
 			}
 			ft_strdel(&line);
 		}
-		//1)calculate estimated square 2)try to resolve 3)print on screen
-		show_square(&root);
+		if (calc_square(&root) == 1)
+		{
+			printf("Root is %p\n", root);
+			show_square(&root);
+		}
 	}
 	return (0);
 }

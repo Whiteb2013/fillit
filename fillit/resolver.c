@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 21:50:51 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/20 23:11:20 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/21 23:53:50 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,20 @@ int		gen_dlx_options(t_dlx **root, size_t square)
 	t_dlx	*tmp;
 	t_dlx	*tmp2;
 	int 	res;
-	size_t	i = 0;
-	size_t	x = 0;
-	size_t	y = 0;
-	size_t	pointer = 0;
+	//size_t	i = 0;
+	//size_t	x = 0;
+	//size_t	y = 0;
+	//size_t	pointer = 0;
 
 	tmp = *root;
 	while (tmp)
 	{
-		printf("New tetrimino %p\n", tmp);
+		//printf("New tetrimino %p\n", tmp);
 		while ((res = create_dlx_node_down(tmp, square)) > 0)
 			;
 		if (res < 0)
 			return (0);
-		//printing to check
+		/*printing to check
 		tmp2 = tmp;
 		while (tmp2)
 		{
@@ -75,7 +75,7 @@ int		gen_dlx_options(t_dlx **root, size_t square)
 			printf("\n");
 			tmp2 = tmp2->down;
 		}
-		//till here
+		//till here*/
 		tmp = tmp->right;
 	}
 	return (1);
@@ -98,7 +98,10 @@ int		check_dlx_left(t_dlx *node)
 			{
 				if (tmp->pos.x[i] == node->pos.x[k] 
 						&& tmp->pos.y[i] == node->pos.y[k])
+				{
+					//printf("Left collision detected, node = %p, tmp = %p\n", node, tmp);
 					return (0);
+				}
 			}
 		}
 		tmp = tmp->left;
@@ -116,6 +119,7 @@ int		resolve_dlx(t_dlx **root, size_t square)
 		return (-1);
 	while (tmp)
 	{
+		//printf("Current tmp = %p\n", tmp);
 		tmp_prev = tmp;
 		if (check_dlx_left(tmp))
 		{
@@ -124,13 +128,19 @@ int		resolve_dlx(t_dlx **root, size_t square)
 			tmp = tmp->right;
 		}
 		else if (tmp->down)
+		{
+			tmp->down->left = tmp->left;
 			tmp = tmp->down;
+		}
 		else
 		{
 			while (tmp->left && !tmp->left->down)
 				tmp = tmp->left;
 			if (tmp->left && tmp->left->down)
+			{
+				tmp->left->down->left = tmp->left->left;
 				tmp = tmp->left->down;
+			}
 			else
 				return (0);
 		}
@@ -139,15 +149,17 @@ int		resolve_dlx(t_dlx **root, size_t square)
 	return (1);
 }
 
-int		show_square(t_dlx **root)
+int		calc_square(t_dlx **root)
 {
-	size_t min_square;
+	size_t	min_square;
+	size_t	square;
+	int		res;
 
 	min_square = ft_sqrt_plus(dlx_size(root) * 4);	
-	//if (!gen_dlx_options(root, min_square))
-	//	return (ft_error_display(0));
-	while (!resolve_dlx(root, min_square))
+	while (!(res = resolve_dlx(root, min_square)))
 		min_square++;
-	printf("Final position %p", *root);
+	printf("Last  %p\n", *root);
+	if (res < 0)
+		return (-1);
 	return (1);
 }
