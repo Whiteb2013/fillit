@@ -6,13 +6,13 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:26:52 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/20 23:11:24 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/22 15:11:45 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		create_dlx_node_down(t_dlx *node, size_t square)
+int		create_dlx_node_down(t_dlx *node)
 {
 	t_dlx	*tmp;
 	int		i;
@@ -22,7 +22,7 @@ int		create_dlx_node_down(t_dlx *node, size_t square)
 	i = 4;
 	while (tmp->down)
 		tmp = tmp->down;
-	if (!(offset = square_checker(tmp, square)))
+	if (!(offset = square_checker(tmp)))
 		return (0);
 	if (!(tmp->down = (t_dlx *)ft_memalloc(sizeof(t_dlx))))
 		return (-1);
@@ -30,7 +30,8 @@ int		create_dlx_node_down(t_dlx *node, size_t square)
 	tmp->down->left = NULL;
 	tmp->down->down = NULL;
 	tmp->down->up = tmp;
-	tmp->down->square = square;
+	tmp->down->square = node->square;
+	tmp->down->letter = tmp->letter;
 	if (offset == 2)
 		while (i-- > 0)
 		{
@@ -44,12 +45,12 @@ int		create_dlx_node_down(t_dlx *node, size_t square)
 			tmp->down->pos.x[i] = tmp->pos.x[i];
 			tmp->down->pos.y[i] = tmp->pos.y[i] + 1;
 		}
-		move_left(&tmp->down);
+		move_left(tmp->down);
 	}
 	return (1);
 }
 
-t_dlx	**create_dlx_node(t_dlx **root, char c)
+t_dlx	**create_dlx_node(t_dlx **root)
 {
 	t_dlx	*tmp;
 
@@ -58,22 +59,25 @@ t_dlx	**create_dlx_node(t_dlx **root, char c)
 	tmp->right = NULL;
 	tmp->down = NULL;
 	tmp->up = NULL;
-	tmp->pos.letter = c;
 	tmp->pos.amount = 0;	
 	if (!*root)
+	{
 		*root = tmp;
+		tmp->letter = 'A';
+	}
 	else
 	{
 		while ((*root)->right)
 			*root = (*root)->right;	
 		tmp->left = *root;
+		tmp->letter = (*root)->letter + 1;
 		(*root)->right = tmp;
 		*root = (*root)->right;
 	}
 	return (root);
 }
 
-void	fill_dlx_node(t_dlx **root, char *s, size_t y)
+void	fill_dlx_node(t_dlx *root, char *s, size_t y)
 {
 	size_t	i;
 
@@ -82,13 +86,13 @@ void	fill_dlx_node(t_dlx **root, char *s, size_t y)
 	{
 		if (s[i] == '#')
 		{
-			(*root)->pos.y[(*root)->pos.amount] = y;
-			(*root)->pos.x[(*root)->pos.amount] = i;
-			(*root)->pos.amount++;
+			root->pos.y[root->pos.amount] = y;
+			root->pos.x[root->pos.amount] = i;
+			root->pos.amount++;
 		}
 		i++;
 	}
-	if ((*root)->pos.amount == 4)
+	if (root->pos.amount == 4)
 	{
 		move_top(root);
 		move_left(root);

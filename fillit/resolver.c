@@ -6,12 +6,11 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 21:50:51 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/21 23:53:50 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/22 16:29:21 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h>
 
 size_t	dlx_size(t_dlx **root)
 {	
@@ -31,20 +30,20 @@ int		gen_dlx_options(t_dlx **root, size_t square)
 	t_dlx	*tmp;
 	t_dlx	*tmp2;
 	int 	res;
-	//size_t	i = 0;
-	//size_t	x = 0;
-	//size_t	y = 0;
-	//size_t	pointer = 0;
+	size_t	i = 0;
+	size_t	x = 0;
+	size_t	y = 0;
+	size_t	pointer = 0;
 
 	tmp = *root;
 	while (tmp)
 	{
-		//printf("New tetrimino %p\n", tmp);
-		while ((res = create_dlx_node_down(tmp, square)) > 0)
+		tmp->square = square;
+		while ((res = create_dlx_node_down(tmp)) > 0)
 			;
 		if (res < 0)
 			return (0);
-		/*printing to check
+		/*//printing to check
 		tmp2 = tmp;
 		while (tmp2)
 		{
@@ -96,12 +95,9 @@ int		check_dlx_left(t_dlx *node)
 			k = 4;
 			while (k-- > 0)
 			{
-				if (tmp->pos.x[i] == node->pos.x[k] 
+				if (tmp->pos.x[i] == node->pos.x[k] \
 						&& tmp->pos.y[i] == node->pos.y[k])
-				{
-					//printf("Left collision detected, node = %p, tmp = %p\n", node, tmp);
 					return (0);
-				}
 			}
 		}
 		tmp = tmp->left;
@@ -119,7 +115,6 @@ int		resolve_dlx(t_dlx **root, size_t square)
 		return (-1);
 	while (tmp)
 	{
-		//printf("Current tmp = %p\n", tmp);
 		tmp_prev = tmp;
 		if (check_dlx_left(tmp))
 		{
@@ -142,7 +137,11 @@ int		resolve_dlx(t_dlx **root, size_t square)
 				tmp = tmp->left->down;
 			}
 			else
+			{
+				printf("Increasing square\n");
+				clean_dlx_options(*root);
 				return (0);
+			}
 		}
 	}
 	*root = tmp_prev;
@@ -152,14 +151,13 @@ int		resolve_dlx(t_dlx **root, size_t square)
 int		calc_square(t_dlx **root)
 {
 	size_t	min_square;
-	size_t	square;
+	//size_t	square;
 	int		res;
 
 	min_square = ft_sqrt_plus(dlx_size(root) * 4);	
-	while (!(res = resolve_dlx(root, min_square)))
-		min_square++;
-	printf("Last  %p\n", *root);
-	if (res < 0)
-		return (-1);
-	return (1);
+	min_square = 5;	
+	printf("Min.square = %zu\n", min_square);
+	while (!(res = resolve_dlx(root, min_square++)))
+		;
+	return (res);
 }
