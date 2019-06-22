@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:26:52 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/22 15:11:45 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/22 18:01:13 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		create_dlx_node_down(t_dlx *node)
 	tmp->down->left = NULL;
 	tmp->down->down = NULL;
 	tmp->down->up = tmp;
-	tmp->down->square = node->square;
+	tmp->down->square = tmp->square;
 	tmp->down->letter = tmp->letter;
 	if (offset == 2)
 		while (i-- > 0)

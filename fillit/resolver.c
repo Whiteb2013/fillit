@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 21:50:51 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/22 16:29:21 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/22 18:01:16 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int		gen_dlx_options(t_dlx **root, size_t square)
 	size_t	y = 0;
 	size_t	pointer = 0;
 
+	printf("Generating new option with square %zu and root %p\n", square, *root);
 	tmp = *root;
 	while (tmp)
 	{
@@ -115,6 +116,7 @@ int		resolve_dlx(t_dlx **root, size_t square)
 		return (-1);
 	while (tmp)
 	{
+		//printf("We are checking %p\n", tmp);
 		tmp_prev = tmp;
 		if (check_dlx_left(tmp))
 		{
@@ -151,13 +153,12 @@ int		resolve_dlx(t_dlx **root, size_t square)
 int		calc_square(t_dlx **root)
 {
 	size_t	min_square;
-	//size_t	square;
 	int		res;
 
 	min_square = ft_sqrt_plus(dlx_size(root) * 4);	
 	min_square = 5;	
 	printf("Min.square = %zu\n", min_square);
-	while (!(res = resolve_dlx(root, min_square++)))
-		;
+	while (!(res = resolve_dlx(root, min_square)) && min_square < 7)
+		min_square++;
 	return (res);
 }
