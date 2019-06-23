@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 21:50:51 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/22 18:01:16 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/23 19:41:24 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,22 @@ size_t	dlx_size(t_dlx **root)
 {	
 	size_t size;
 
-	size = 0;
-	while ((*root)->left)
+	size = 1;
+	while ((*root)->left && check_tetrimino(*root))
 	{	
 		size++;
 		*root = (*root)->left;
-	}	
-	return (size + 1);
+	}
+	if (!check_tetrimino(*root) || size > 26)
+		return (0);
+	return (size);
 }
 
 int		gen_dlx_options(t_dlx **root, size_t square)
 {
 	t_dlx	*tmp;
-	t_dlx	*tmp2;
 	int 	res;
-	size_t	i = 0;
-	size_t	x = 0;
-	size_t	y = 0;
-	size_t	pointer = 0;
 
-	printf("Generating new option with square %zu and root %p\n", square, *root);
 	tmp = *root;
 	while (tmp)
 	{
@@ -44,38 +40,6 @@ int		gen_dlx_options(t_dlx **root, size_t square)
 			;
 		if (res < 0)
 			return (0);
-		/*//printing to check
-		tmp2 = tmp;
-		while (tmp2)
-		{
-			printf("%p\n",tmp2);
-			y = 0;
-			while (y < square)
-			{
-				x = 0;
-				while (x < square)
-				{
-					i = 0;
-					pointer = 0;
-					while (i < 4)
-					{
-						if (tmp2->pos.x[i] == x && tmp2->pos.y[i] == y)
-							pointer = 1;
-						i++;
-					}
-					if (!pointer)
-						printf(".");
-					else
-						printf("#");
-					x++;
-				}
-				printf("\n");
-				y++;
-			}
-			printf("\n");
-			tmp2 = tmp2->down;
-		}
-		//till here*/
 		tmp = tmp->right;
 	}
 	return (1);
@@ -116,7 +80,6 @@ int		resolve_dlx(t_dlx **root, size_t square)
 		return (-1);
 	while (tmp)
 	{
-		//printf("We are checking %p\n", tmp);
 		tmp_prev = tmp;
 		if (check_dlx_left(tmp))
 		{
@@ -139,26 +102,30 @@ int		resolve_dlx(t_dlx **root, size_t square)
 				tmp = tmp->left->down;
 			}
 			else
-			{
-				printf("Increasing square\n");
-				clean_dlx_options(*root);
 				return (0);
-			}
 		}
 	}
 	*root = tmp_prev;
 	return (1);
 }
 
-int		calc_square(t_dlx **root)
+void	build_square(t_dlx **root)
 {
+	size_t	size;
 	size_t	min_square;
 	int		res;
 
-	min_square = ft_sqrt_plus(dlx_size(root) * 4);	
-	min_square = 5;	
-	printf("Min.square = %zu\n", min_square);
-	while (!(res = resolve_dlx(root, min_square)) && min_square < 7)
-		min_square++;
-	return (res);
+	if ((size = dlx_size(root)))
+	{
+		min_square = ft_sqrt_plus(size * 4);
+		while (!(res = resolve_dlx(root, min_square++)))
+			clean_dlx(*root, 1);
+		if (res > 0)
+			show_square(root);
+	}
+	if (!size || res < 0)
+	{
+		clean_dlx(*root, 2);
+		ft_error_display(0);
+	}
 }

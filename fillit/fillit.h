@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 20:36:36 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/22 16:25:07 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/23 19:56:24 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,16 @@ typedef	struct		s_dlx
 }					t_dlx;
 
 t_dlx				**create_dlx_node(t_dlx **root);
-void				fill_dlx_node(t_dlx *root, char *s, size_t y);
+int					fill_dlx_node(t_dlx *root, char *s, size_t y);
 void				move_top(t_dlx *root);
 void				move_left(t_dlx *root);
 int					ft_error_display(int error);
-int					calc_square(t_dlx **root);
+void				build_square(t_dlx **root);
 int					create_dlx_node_down(t_dlx *node);
 int					square_checker(t_dlx *node);
-void				clean_dlx_options(t_dlx *root);
+void				clean_dlx(t_dlx *root, int mode);
+void				show_square(t_dlx **root);
+int					check_line(char *line);
+int					check_tetrimino(t_dlx *root);
 
 #endif
