@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 21:50:51 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/23 19:41:24 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/24 23:02:10 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,18 @@
 size_t	dlx_size(t_dlx **root)
 {
 	size_t size;
+	size_t square;
 
+	square = 0;
 	size = 1;
 	while ((*root)->left && check_tetrimino(*root))
 	{
 		size++;
+		if (square < (*root)->square)
+			square = (*root)->square;
 		*root = (*root)->left;
 	}
+	(*root)->square = square;
 	if (!check_tetrimino(*root) || size > 26)
 		return (0);
 	return (size);
@@ -117,7 +122,8 @@ void	build_square(t_dlx **root)
 
 	if ((size = dlx_size(root)))
 	{
-		min_square = ft_sqrt_plus(size * 4);
+		if ((min_square = ft_sqrt_plus(size * 4)) < (*root)->square)
+			min_square = (*root)->square;
 		while (!(res = resolve_dlx(root, min_square++)))
 			clean_dlx(*root, 1);
 		if (res > 0)

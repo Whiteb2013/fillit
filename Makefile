@@ -37,7 +37,4 @@ bin:
 clean:
 	rm -rf $(OBJ_DIR)
 
-fclean: clean
-	rm -rf $(NAME)
-
 re: fclean all

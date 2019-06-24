@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:26:52 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/23 19:27:09 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/24 22:59:01 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,10 @@ int		fill_dlx_node(t_dlx *root, char *s, size_t y)
 	{
 		move_top(root);
 		move_left(root);
+		if (root->pos.x[3] > root->pos.y[3])
+			root->square = root->pos.x[3] + 1;
+		else
+			root->square = root->pos.y[3] + 1;
 	}
 	return (1);
 }
