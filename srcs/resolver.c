@@ -26,6 +26,8 @@ size_t	dlx_size(t_dlx **root)
 			square = (*root)->square;
 		*root = (*root)->left;
 	}
+	if (square < (*root)->square)
+		square = (*root)->square;
 	(*root)->square = square;
 	if (!check_tetrimino(*root) || size > 26)
 		return (0);
@@ -122,8 +124,10 @@ void	build_square(t_dlx **root)
 
 	if ((size = dlx_size(root)))
 	{
+		//printf("resolver root_square before = %i\n", (int)(*root)->square);
 		if ((min_square = ft_sqrt_plus(size * 4)) < (*root)->square)
 			min_square = (*root)->square;
+		//printf("resolver root_square after = %i\n", (int)(*root)->square);
 		while (!(res = resolve_dlx(root, min_square++)))
 			clean_dlx(*root, 1);
 		if (res > 0)
