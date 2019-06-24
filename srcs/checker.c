@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 17:20:22 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/23 20:07:57 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/24 21:23:16 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,28 @@ int		check_line(char *line)
 	return (1);
 }
 
-//debug this
-int		check_tetrimino(t_dlx *root)
+int		check_tetrimino(t_dlx *node)
 {
 	size_t	i;
 	size_t	k;
 	size_t	sum;
 
-	if (root->pos.amount != 4)
+	if (node->pos.amount != 4)
 		return (0);
+	sum = 0;
 	i = 4;
 	while (i--)
 	{
-		k = 0;
-		sum = root->pos.x[i] + root->pos.y[i];
-		while (k < 4 && root->pos.x[k] + root->pos.y[k] != sum + 1 &&
-					root->pos.x[k] + root->pos.y[k] != sum - 1)
-			k++;
-		if (k == 4)
-			return (0);
+		k = i;
+		while (k--)
+		{
+			if (node->pos.x[i] == node->pos.x[k] \
+					&& node->pos.y[i] == node->pos.y[k] + 1)
+				sum++;
+			if (node->pos.x[i] == node->pos.x[k] + 1 \
+					&& node->pos.y[i] == node->pos.y[k])
+				sum++;
+		}
 	}
-	return (1);
+	return (sum > 2);
 }
