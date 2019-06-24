@@ -59,7 +59,7 @@ t_dlx	**create_dlx_node(t_dlx **root)
 	tmp->right = NULL;
 	tmp->down = NULL;
 	tmp->up = NULL;
-	tmp->pos.amount = 0;	
+	tmp->pos.amount = 0;
 	if (!*root)
 	{
 		*root = tmp;
@@ -68,7 +68,7 @@ t_dlx	**create_dlx_node(t_dlx **root)
 	else
 	{
 		while ((*root)->right)
-			*root = (*root)->right;	
+			*root = (*root)->right;
 		tmp->left = *root;
 		tmp->letter = (*root)->letter + 1;
 		(*root)->right = tmp;

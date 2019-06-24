@@ -35,10 +35,10 @@ int		check_line(char *line)
 //debug this
 int		check_tetrimino(t_dlx *root)
 {
-	size_t i;
-	size_t k;
-	size_t sum;
-	
+	size_t	i;
+	size_t	k;
+	size_t	sum;
+
 	if (root->pos.amount != 4)
 		return (0);
 	i = 4;

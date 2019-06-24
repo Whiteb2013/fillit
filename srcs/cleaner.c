@@ -18,7 +18,7 @@ void	clean_dlx_base(t_dlx *root)
 		return ;
 	if (root->right)
 	{
-		root->right->left = NULL;	
+		root->right->left = NULL;
 		clean_dlx_base(root->right);
 	}
 	root->right = NULL;

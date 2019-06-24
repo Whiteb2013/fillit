@@ -13,12 +13,12 @@
 #include "fillit.h"
 
 size_t	dlx_size(t_dlx **root)
-{	
+{
 	size_t size;
 
 	size = 1;
 	while ((*root)->left && check_tetrimino(*root))
-	{	
+	{
 		size++;
 		*root = (*root)->left;
 	}
@@ -30,7 +30,7 @@ size_t	dlx_size(t_dlx **root)
 int		gen_dlx_options(t_dlx **root, size_t square)
 {
 	t_dlx	*tmp;
-	int 	res;
+	int		res;
 
 	tmp = *root;
 	while (tmp)

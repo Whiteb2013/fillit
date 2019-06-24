@@ -27,7 +27,7 @@ void	show_square(t_dlx **root)
 		i++;
 	}
 	while (*root)
-	{	
+	{
 		i = 4;
 		while (i-- > 0)
 			map[((*root)->pos.y[i] * ((*root)->square + 1)) + \
@@ -42,11 +42,11 @@ int		pars_input_file(char *line, t_dlx **root)
 {
 	static size_t	line_counter;
 	static size_t	empty_line;
-	int 			res;
+	int				res;
 
 	res = check_line(line);
 	if (res == 1)
-	{	
+	{
 		if (line_counter / 4 != empty_line)
 			return (0);
 		if (!(line_counter % 4))
@@ -69,25 +69,22 @@ int		main(int argc, char **argv)
 	t_dlx	*root;
 
 	if (argc != 2)
-		ft_putendl("usage: cp source_file");
-	else
+		return (ft_error_display(-1));
+	if ((fd = open(argv[1], O_RDONLY)) < 1)
+		return (ft_error_display(0));
+	root = NULL;
+	line = NULL;
+	while (get_next_line(fd, &line))
 	{
-		if ((fd = open(argv[1], O_RDONLY)) < 1)
-			return (ft_error_display(0));
-		root = NULL;
-		line = NULL;
-		while (get_next_line(fd, &line))
+		if (!pars_input_file(line, &root))
 		{
-			if (!pars_input_file(line, &root))
-			{
-				clean_dlx(root, 2);
-				return (ft_error_display(0));
-			}
-			ft_strdel(&line);
-		}
-		if (!root)
+			clean_dlx(root, 2);
 			return (ft_error_display(0));
-		build_square(&root);
+		}
+		ft_strdel(&line);
 	}
+	if (!root)
+		return (ft_error_display(0));
+	build_square(&root);
 	return (0);
 }
