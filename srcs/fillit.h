@@ -17,18 +17,18 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-typedef	struct		s_point
+typedef	struct		s_block
 {
 	size_t			x[4];
 	size_t			y[4];
 	size_t			amount;
-}					t_point;
+}					t_block;
 
 typedef	struct		s_dlx
 {
 	size_t			square;
 	char			letter;
-	t_point			pos;
+	t_block			block;
 	struct s_dlx	*up;
 	struct s_dlx	*down;
 	struct s_dlx	*right;
@@ -39,7 +39,7 @@ t_dlx				**create_dlx_node(t_dlx **root);
 int					fill_dlx_node(t_dlx *root, char *s, size_t y);
 void				move_top(t_dlx *root);
 void				move_left(t_dlx *root);
-int					ft_error_display(int error);
+void				ft_error(int error);
 void				build_square(t_dlx **root);
 int					create_dlx_node_down(t_dlx *node);
 int					square_checker(t_dlx *node);

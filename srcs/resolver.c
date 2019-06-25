@@ -67,8 +67,8 @@ int		check_dlx_left(t_dlx *node)
 			k = 4;
 			while (k-- > 0)
 			{
-				if (tmp->pos.x[i] == node->pos.x[k] \
-						&& tmp->pos.y[i] == node->pos.y[k])
+				if (tmp->block.x[i] == node->block.x[k] \
+						&& tmp->block.y[i] == node->block.y[k])
 					return (0);
 			}
 		}
@@ -124,10 +124,8 @@ void	build_square(t_dlx **root)
 
 	if ((size = dlx_size(root)))
 	{
-		//printf("resolver root_square before = %i\n", (int)(*root)->square);
 		if ((min_square = ft_sqrt_plus(size * 4)) < (*root)->square)
 			min_square = (*root)->square;
-		//printf("resolver root_square after = %i\n", (int)(*root)->square);
 		while (!(res = resolve_dlx(root, min_square++)))
 			clean_dlx(*root, 1);
 		if (res > 0)
@@ -136,6 +134,6 @@ void	build_square(t_dlx **root)
 	if (!size || res < 0)
 	{
 		clean_dlx(*root, 2);
-		ft_error_display(0);
+		ft_error(0);
 	}
 }

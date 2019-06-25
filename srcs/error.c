@@ -12,11 +12,11 @@
 
 #include "fillit.h"
 
-int		ft_error_display(int error)
+void	ft_error(int error)
 {
 	if (error == 0)
 		ft_putendl("error");
 	else if (error == -1)
 		ft_putendl("usage: cp source_file");
-	return (0);
+	exit(0);
 }

@@ -20,11 +20,11 @@ int		square_checker(t_dlx *node)
 	i = 4;
 	offset = 2;
 	while (i-- > 0 && offset != 1)
-		if (node->pos.x[i] + 1 >= node->square)
+		if (node->block.x[i] + 1 >= node->square)
 			offset = 1;
-	if (node->pos.y[3] >= node->square)
+	if (node->block.y[3] >= node->square)
 		return (0);
-	if (offset == 1 && node->pos.y[3] + 1 >= node->square)
+	if (offset == 1 && node->block.y[3] + 1 >= node->square)
 		return (0);
 	return (offset);
 }
@@ -33,12 +33,12 @@ void	move_top(t_dlx *root)
 {
 	size_t i;
 
-	if (root->pos.y[0])
+	if (root->block.y[0])
 	{
 		i = 0;
 		while (i < 4)
 		{
-			root->pos.y[i]--;
+			root->block.y[i]--;
 			i++;
 		}
 		move_top(root);
@@ -52,11 +52,11 @@ void	move_left(t_dlx *root)
 	i = 0;
 	while (i < 4)
 	{
-		if (!root->pos.x[i])
+		if (!root->block.x[i])
 			return ;
 		i++;
 	}
 	while (i-- > 0)
-		root->pos.x[i]--;
+		root->block.x[i]--;
 	move_left(root);
 }

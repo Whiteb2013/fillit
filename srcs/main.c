@@ -30,8 +30,8 @@ void	show_square(t_dlx **root)
 	{
 		i = 4;
 		while (i-- > 0)
-			map[((*root)->pos.y[i] * ((*root)->square + 1)) + \
-				(*root)->pos.x[i]] = (*root)->letter;
+			map[((*root)->block.y[i] * ((*root)->square + 1)) + \
+				(*root)->block.x[i]] = (*root)->letter;
 		*root = (*root)->left;
 	}
 	ft_putstr(map);
@@ -62,16 +62,25 @@ int		pars_input_file(char *line, t_dlx **root)
 	return (1);
 }
 
-int		main(int argc, char **argv)
+void	ft_error(int error)
+{
+	if (error == 0)
+		ft_putendl("error");
+	else if (error == -1)
+		ft_putendl("usage: fillit input_file");
+	exit(0);
+}
+
+int		main(int argc_aka_crutch, char **argv)
 {
 	int		fd;
 	char	*line;
 	t_dlx	*root;
 
-	if (argc != 2)
-		return (ft_error_display(-1));
+	if (argc_aka_crutch != 2)
+		ft_error(-1);
 	if ((fd = open(argv[1], O_RDONLY)) < 1)
-		return (ft_error_display(0));
+		ft_error(0);
 	root = NULL;
 	line = NULL;
 	while (get_next_line(fd, &line))
@@ -79,12 +88,13 @@ int		main(int argc, char **argv)
 		if (!pars_input_file(line, &root))
 		{
 			clean_dlx(root, 2);
-			return (ft_error_display(0));
+			ft_error(0);
 		}
+		argc_aka_crutch = ft_strlen(line);
 		ft_strdel(&line);
 	}
-	if (!root)
-		return (ft_error_display(0));
+	if (!root || !argc_aka_crutch)
+		ft_error(0);
 	build_square(&root);
 	return (0);
 }

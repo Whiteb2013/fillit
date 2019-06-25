@@ -38,7 +38,7 @@ int		check_tetrimino(t_dlx *node)
 	size_t	k;
 	size_t	sum;
 
-	if (node->pos.amount != 4)
+	if (node->block.amount != 4)
 		return (0);
 	sum = 0;
 	i = 4;
@@ -47,11 +47,11 @@ int		check_tetrimino(t_dlx *node)
 		k = i;
 		while (k--)
 		{
-			if (node->pos.x[i] == node->pos.x[k] \
-					&& node->pos.y[i] == node->pos.y[k] + 1)
+			if (node->block.x[i] == node->block.x[k] \
+					&& node->block.y[i] == node->block.y[k] + 1)
 				sum++;
-			if (node->pos.x[i] == node->pos.x[k] + 1 \
-					&& node->pos.y[i] == node->pos.y[k])
+			if (node->block.x[i] == node->block.x[k] + 1 \
+					&& node->block.y[i] == node->block.y[k])
 				sum++;
 		}
 	}

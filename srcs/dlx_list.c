@@ -35,15 +35,15 @@ int		create_dlx_node_down(t_dlx *node)
 	if (offset == 2)
 		while (i-- > 0)
 		{
-			tmp->down->pos.y[i] = tmp->pos.y[i];
-			tmp->down->pos.x[i] = tmp->pos.x[i] + 1;
+			tmp->down->block.y[i] = tmp->block.y[i];
+			tmp->down->block.x[i] = tmp->block.x[i] + 1;
 		}
 	else if (offset == 1)
 	{
 		while (i-- > 0)
 		{
-			tmp->down->pos.x[i] = tmp->pos.x[i];
-			tmp->down->pos.y[i] = tmp->pos.y[i] + 1;
+			tmp->down->block.x[i] = tmp->block.x[i];
+			tmp->down->block.y[i] = tmp->block.y[i] + 1;
 		}
 		move_left(tmp->down);
 	}
@@ -59,7 +59,7 @@ t_dlx	**create_dlx_node(t_dlx **root)
 	tmp->right = NULL;
 	tmp->down = NULL;
 	tmp->up = NULL;
-	tmp->pos.amount = 0;
+	tmp->block.amount = 0;
 	if (!*root)
 	{
 		*root = tmp;
@@ -86,22 +86,22 @@ int		fill_dlx_node(t_dlx *root, char *s, size_t y)
 	{
 		if (s[i] == '#')
 		{
-			if (root->pos.amount == 4)
+			if (root->block.amount == 4)
 				return (0);
-			root->pos.y[root->pos.amount] = y;
-			root->pos.x[root->pos.amount] = i;
-			root->pos.amount++;
+			root->block.y[root->block.amount] = y;
+			root->block.x[root->block.amount] = i;
+			root->block.amount++;
 		}
 		i++;
 	}
-	if (root->pos.amount == 4)
+	if (root->block.amount == 4)
 	{
 		move_top(root);
 		move_left(root);
-		if (root->pos.x[3] > root->pos.y[3])
-			root->square = root->pos.x[3] + 1;
+		if (root->block.x[3] > root->block.y[3])
+			root->square = root->block.x[3] + 1;
 		else
-			root->square = root->pos.y[3] + 1;
+			root->square = root->block.y[3] + 1;
 	}
 	return (1);
 }
