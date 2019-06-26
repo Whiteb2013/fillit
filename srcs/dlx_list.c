@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:26:52 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/24 22:59:01 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/26 23:32:07 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,31 +50,27 @@ int		create_dlx_node_down(t_dlx *node)
 	return (1);
 }
 
-t_dlx	**create_dlx_node(t_dlx **root)
+void	create_dlx_node(t_dlx **root)
 {
-	t_dlx	*tmp;
-
-	if (!(tmp = (t_dlx *)ft_memalloc(sizeof(t_dlx))))
-		return (NULL);
-	tmp->right = NULL;
-	tmp->down = NULL;
-	tmp->up = NULL;
-	tmp->block.amount = 0;
 	if (!*root)
 	{
-		*root = tmp;
-		tmp->letter = 'A';
+		if (!(*root = (t_dlx *)ft_memalloc(sizeof(t_dlx))))
+			exit (0);
+		(*root)->letter = 'A';
+		(*root)->left = NULL;
 	}
 	else
 	{
-		while ((*root)->right)
-			*root = (*root)->right;
-		tmp->left = *root;
-		tmp->letter = (*root)->letter + 1;
-		(*root)->right = tmp;
-		*root = (*root)->right;
+		if (!((*root)->right = (t_dlx *)ft_memalloc(sizeof(t_dlx))))
+			exit (0);
+		(*root)->right->left = *root;
+		(*root)->right->letter = (*root)->letter + 1;
+		(*root) = (*root)->right;
 	}
-	return (root);
+	(*root)->right = NULL;
+	(*root)->down = NULL;
+	(*root)->up = NULL;
+	(*root)->block.amount = 0;	
 }
 
 int		fill_dlx_node(t_dlx *root, char *s, size_t y)
