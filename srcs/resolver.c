@@ -15,26 +15,26 @@
 size_t	dlx_size(t_dlx **root)
 {
 	size_t size;
-	size_t square;
+	size_t side;
 
-	square = 0;
+	side = 0;
 	size = 1;
 	while ((*root)->left && check_tetrimino(*root))
 	{
 		size++;
-		if (square < (*root)->square)
-			square = (*root)->square;
+		if (side < (*root)->side)
+			side = (*root)->side;
 		*root = (*root)->left;
 	}
-	if (square < (*root)->square)
-		square = (*root)->square;
-	(*root)->square = square;
+	if (side < (*root)->side)
+		side = (*root)->side;
+	(*root)->side = side;
 	if (!check_tetrimino(*root) || size > 26)
 		return (0);
 	return (size);
 }
 
-int		gen_dlx_options(t_dlx **root, size_t square)
+int		gen_dlx_options(t_dlx **root, size_t side)
 {
 	t_dlx	*tmp;
 	int		res;
@@ -42,7 +42,7 @@ int		gen_dlx_options(t_dlx **root, size_t square)
 	tmp = *root;
 	while (tmp)
 	{
-		tmp->square = square;
+		tmp->side = side;
 		while ((res = create_dlx_node_down(tmp)) > 0)
 			;
 		if (res < 0)
@@ -77,13 +77,13 @@ int		check_dlx_left(t_dlx *node)
 	return (1);
 }
 
-int		resolve_dlx(t_dlx **root, size_t square)
+int		resolve_dlx(t_dlx **root, size_t side)
 {
 	t_dlx	*tmp;
 	t_dlx	*tmp_prev;
 
 	tmp = *root;
-	if (!gen_dlx_options(root, square))
+	if (!gen_dlx_options(root, side))
 		return (-1);
 	while (tmp)
 	{
@@ -116,17 +116,27 @@ int		resolve_dlx(t_dlx **root, size_t square)
 	return (1);
 }
 
+size_t	ft_sqrt_plus(size_t nb)
+{
+	size_t	i;
+
+	i = 2;
+	while (i * i < nb)
+		i++;
+	return (i);
+}
+
 void	build_square(t_dlx **root)
 {
 	size_t	size;
-	size_t	min_square;
+	size_t	min_side;
 	int		res;
 
-	if ((size = dlx_size(root)))
+	if ((size = dlx_size(root)))		//with exit(0) we can do without if()
 	{
-		if ((min_square = ft_sqrt_plus(size * 4)) < (*root)->square)
-			min_square = (*root)->square;
-		while (!(res = resolve_dlx(root, min_square++)))
+		if ((min_side = ft_sqrt_plus(size * 4)) < (*root)->side)
+			min_side = (*root)->side;
+		while (!(res = resolve_dlx(root, min_side++)))
 			clean_dlx(*root, 1);
 		if (res > 0)
 			show_square(root);

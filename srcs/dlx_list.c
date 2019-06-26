@@ -30,7 +30,7 @@ int		create_dlx_node_down(t_dlx *node)
 	tmp->down->left = NULL;
 	tmp->down->down = NULL;
 	tmp->down->up = tmp;
-	tmp->down->square = tmp->square;
+	tmp->down->side = tmp->side;
 	tmp->down->letter = tmp->letter;
 	if (offset == 2)
 		while (i-- > 0)
@@ -99,9 +99,9 @@ int		fill_dlx_node(t_dlx *root, char *s, size_t y)
 		move_top(root);
 		move_left(root);
 		if (root->block.x[3] > root->block.y[3])
-			root->square = root->block.x[3] + 1;
+			root->side = root->block.x[3] + 1;
 		else
-			root->square = root->block.y[3] + 1;
+			root->side = root->block.y[3] + 1;
 	}
 	return (1);
 }

@@ -2,3 +2,4 @@
 ft_error теперь void и завершает программу через exit(0)
 ft_error перенесена в main
 pos переименован в block
+square заменен на side

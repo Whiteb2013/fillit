@@ -26,7 +26,7 @@ typedef	struct		s_block
 
 typedef	struct		s_dlx
 {
-	size_t			square;
+	size_t			side;
 	char			letter;
 	t_block			block;
 	struct s_dlx	*up;
@@ -41,6 +41,7 @@ void				move_top(t_dlx *root);
 void				move_left(t_dlx *root);
 void				ft_error(int error);
 void				build_square(t_dlx **root);
+size_t				ft_sqrt_plus(size_t nb);
 int					create_dlx_node_down(t_dlx *node);
 int					square_checker(t_dlx *node);
 void				clean_dlx(t_dlx *root, int mode);

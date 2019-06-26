@@ -18,11 +18,11 @@ void	show_square(t_dlx **root)
 	size_t	i;
 
 	i = 0;
-	map = ft_strnew(((*root)->square + 1) * (*root)->square);
-	ft_memset(map, '.', ((*root)->square + 1) * (*root)->square);
-	while (i < ((*root)->square + 1) * (*root)->square)
+	map = ft_strnew(((*root)->side + 1) * (*root)->side);
+	ft_memset(map, '.', ((*root)->side + 1) * (*root)->side);
+	while (i < ((*root)->side + 1) * (*root)->side)
 	{
-		if (!((i + 1) % ((*root)->square + 1)))
+		if (!((i + 1) % ((*root)->side + 1)))
 			map[i] = '\n';
 		i++;
 	}
@@ -30,7 +30,7 @@ void	show_square(t_dlx **root)
 	{
 		i = 4;
 		while (i-- > 0)
-			map[((*root)->block.y[i] * ((*root)->square + 1)) + \
+			map[((*root)->block.y[i] * ((*root)->side + 1)) + \
 				(*root)->block.x[i]] = (*root)->letter;
 		*root = (*root)->left;
 	}

@@ -20,11 +20,11 @@ int		square_checker(t_dlx *node)
 	i = 4;
 	offset = 2;
 	while (i-- > 0 && offset != 1)
-		if (node->block.x[i] + 1 >= node->square)
+		if (node->block.x[i] + 1 >= node->side)
 			offset = 1;
-	if (node->block.y[3] >= node->square)
+	if (node->block.y[3] >= node->side)
 		return (0);
-	if (offset == 1 && node->block.y[3] + 1 >= node->square)
+	if (offset == 1 && node->block.y[3] + 1 >= node->side)
 		return (0);
 	return (offset);
 }
