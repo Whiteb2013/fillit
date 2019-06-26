@@ -12,8 +12,7 @@
 
 NAME = fillit
 
-SRC_DIR = srcs
-OBJ_DIR	= objs
+SRC_DIR = ./srcs
 LIB_DIR = ./libft
 
 SRC_FILES =	main.c \
@@ -26,11 +25,9 @@ SRC_FILES =	main.c \
 SRCS = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 OBJS = $(SRC_FILES:.c=.o)
 
-INCLUDES = libft
-
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-LFLAGS = -I -I$(LIB_DIR)
+LFLAGS = -I$(LIB_DIR) -I$(SRC_DIR)
 
 all: $(NAME)
 

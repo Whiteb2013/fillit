@@ -25,7 +25,7 @@ SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 	  ft_putendl_fd.c ft_putnbr_fd.c ft_lstnew.c ft_lstdelone.c \
 	  ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c ft_strncat.c \
 	  ft_strtrimi.c ft_strclean.c ft_strwordcounter.c ft_strwordsize.c \
-	  ft_strndup.c get_next_line.c ft_sqrt.c
+	  ft_strndup.c get_next_line.c
 
 HEAD = libft.h
 HEAD2 = get_next_line.h

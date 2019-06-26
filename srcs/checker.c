@@ -22,10 +22,10 @@ int		check_line(char *line)
 		{
 			while (len--)
 				if (line[len] != '.' && line[len] != '#')
-					return (-1);
+					ft_error(0);
 		}
 		else
-			return (-1);
+			ft_error(0);
 	}
 	else
 		return (0);
@@ -39,7 +39,7 @@ int		check_tetrimino(t_dlx *node)
 	size_t	sum;
 
 	if (node->block.amount != 4)
-		return (0);
+		ft_error(0);
 	sum = 0;
 	i = 4;
 	while (i--)

@@ -13,7 +13,7 @@
 #ifndef FILLIT_H
 # define FILLIT_H
 
-# include "get_next_line.h"
+# include "../libft/libft.h"
 # include <fcntl.h>
 # include <stdio.h>
 
@@ -35,8 +35,8 @@ typedef	struct		s_dlx
 	struct s_dlx	*left;
 }					t_dlx;
 
-t_dlx				**create_dlx_node(t_dlx **root);
-int					fill_dlx_node(t_dlx *root, char *s, size_t y);
+void				create_dlx_node(t_dlx **root);
+void				fill_dlx_node(t_dlx *root, char *s, size_t y);
 void				move_top(t_dlx *root);
 void				move_left(t_dlx *root);
 void				ft_error(int error);

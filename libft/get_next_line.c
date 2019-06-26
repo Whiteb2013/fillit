@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 static t_list	*ft_find_list(int fd, t_list **file_content)
 {

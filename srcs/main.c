@@ -14,31 +14,31 @@
 
 void	show_square(t_dlx **root)
 {
-	char	*map;
+	char	*square;
 	size_t	i;
 
 	i = 0;
-	map = ft_strnew(((*root)->side + 1) * (*root)->side);
-	ft_memset(map, '.', ((*root)->side + 1) * (*root)->side);
+	square = ft_strnew(((*root)->side + 1) * (*root)->side);
+	ft_memset(square, '.', ((*root)->side + 1) * (*root)->side);
 	while (i < ((*root)->side + 1) * (*root)->side)
 	{
 		if (!((i + 1) % ((*root)->side + 1)))
-			map[i] = '\n';
+			square[i] = '\n';
 		i++;
 	}
 	while (*root)
 	{
 		i = 4;
 		while (i-- > 0)
-			map[((*root)->block.y[i] * ((*root)->side + 1)) + \
+			square[((*root)->block.y[i] * ((*root)->side + 1)) + \
 				(*root)->block.x[i]] = (*root)->letter;
 		*root = (*root)->left;
 	}
-	ft_putstr(map);
-	ft_strdel(&map);
+	ft_putstr(square);
+	ft_strdel(&square);
 }
 
-int		pars_input_file(char *line, t_dlx **root)
+void	pars_input_file(char *line, t_dlx **root)
 {
 	static size_t	line_counter;
 	static size_t	empty_line;
@@ -48,18 +48,15 @@ int		pars_input_file(char *line, t_dlx **root)
 	if (res == 1)
 	{
 		if (line_counter / 4 != empty_line)
-			return (0);
+			ft_error(0);
 		if (!(line_counter % 4))
-			if (!create_dlx_node(root))
-				return (0);
-		if (!fill_dlx_node(*root, line, line_counter++ % 4))
-			return (0);
+			create_dlx_node(root);
+		fill_dlx_node(*root, line, line_counter++ % 4);
 	}
-	else if (res == -1)
-		return (0);
 	else if (res == 0)
 		empty_line++;
-	return (1);
+	else if (res == -1)
+		ft_error(0);
 }
 
 void	ft_error(int error)
@@ -71,13 +68,14 @@ void	ft_error(int error)
 	exit(0);
 }
 
-int		main(int argc_aka_crutch, char **argv)
+int		main(int argc, char **argv)
 {
 	int		fd;
 	char	*line;
 	t_dlx	*root;
+	char	flag;
 
-	if (argc_aka_crutch != 2)
+	if (argc != 2)
 		ft_error(-1);
 	if ((fd = open(argv[1], O_RDONLY)) < 1)
 		ft_error(0);
@@ -85,15 +83,13 @@ int		main(int argc_aka_crutch, char **argv)
 	line = NULL;
 	while (get_next_line(fd, &line))
 	{
-		if (!pars_input_file(line, &root))
-		{
-			clean_dlx(root, 2);
-			ft_error(0);
-		}
-		argc_aka_crutch = ft_strlen(line);
+		flag = 'f';
+		pars_input_file(line, &root);
+		if (line[0] == '\0')
+			flag = 't';
 		ft_strdel(&line);
 	}
-	if (!root || !argc_aka_crutch)
+	if (!root || flag == 't')
 		ft_error(0);
 	build_square(&root);
 	return (0);

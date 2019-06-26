@@ -12,6 +12,7 @@
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# define BUFF_SIZE 32
 # include <unistd.h>
 # include <stdlib.h>
 
@@ -88,5 +89,6 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 char				*ft_strndup(const char *s1, size_t n);
+int					get_next_line(const int fd, char **line);
 
 #endif

@@ -35,12 +35,9 @@ void	move_top(t_dlx *root)
 
 	if (root->block.y[0])
 	{
-		i = 0;
-		while (i < 4)
-		{
+		i = 4;
+		while (i--)
 			root->block.y[i]--;
-			i++;
-		}
 		move_top(root);
 	}
 }
@@ -56,7 +53,7 @@ void	move_left(t_dlx *root)
 			return ;
 		i++;
 	}
-	while (i-- > 0)
+	while (i--)
 		root->block.x[i]--;
 	move_left(root);
 }

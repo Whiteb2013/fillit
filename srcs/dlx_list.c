@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:26:52 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/26 23:32:07 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/24 22:59:01 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		create_dlx_node_down(t_dlx *node)
 	if (!(offset = square_checker(tmp)))
 		return (0);
 	if (!(tmp->down = (t_dlx *)ft_memalloc(sizeof(t_dlx))))
-		return (-1);
+		ft_error(0);
 	tmp->down->right = tmp->right;
 	tmp->down->left = NULL;
 	tmp->down->down = NULL;
@@ -55,14 +55,14 @@ void	create_dlx_node(t_dlx **root)
 	if (!*root)
 	{
 		if (!(*root = (t_dlx *)ft_memalloc(sizeof(t_dlx))))
-			exit (0);
+			ft_error(0);
 		(*root)->letter = 'A';
 		(*root)->left = NULL;
 	}
 	else
 	{
 		if (!((*root)->right = (t_dlx *)ft_memalloc(sizeof(t_dlx))))
-			exit (0);
+			ft_error(0);
 		(*root)->right->left = *root;
 		(*root)->right->letter = (*root)->letter + 1;
 		(*root) = (*root)->right;
@@ -70,10 +70,10 @@ void	create_dlx_node(t_dlx **root)
 	(*root)->right = NULL;
 	(*root)->down = NULL;
 	(*root)->up = NULL;
-	(*root)->block.amount = 0;	
+	(*root)->block.amount = 0;
 }
 
-int		fill_dlx_node(t_dlx *root, char *s, size_t y)
+void	fill_dlx_node(t_dlx *root, char *s, size_t y)
 {
 	size_t	i;
 
@@ -83,7 +83,7 @@ int		fill_dlx_node(t_dlx *root, char *s, size_t y)
 		if (s[i] == '#')
 		{
 			if (root->block.amount == 4)
-				return (0);
+				ft_error(0);
 			root->block.y[root->block.amount] = y;
 			root->block.x[root->block.amount] = i;
 			root->block.amount++;
@@ -99,5 +99,4 @@ int		fill_dlx_node(t_dlx *root, char *s, size_t y)
 		else
 			root->side = root->block.y[3] + 1;
 	}
-	return (1);
 }
