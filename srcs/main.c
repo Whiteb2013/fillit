@@ -59,15 +59,6 @@ void	pars_input_file(char *line, t_dlx **root)
 		ft_error(0);
 }
 
-void	ft_error(int error)
-{
-	if (error == 0)
-		ft_putendl("error");
-	else if (error == -1)
-		ft_putendl("usage: fillit input_file");
-	exit(0);
-}
-
 int		main(int argc, char **argv)
 {
 	int		fd;

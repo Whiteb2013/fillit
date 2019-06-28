@@ -17,6 +17,6 @@ void	ft_error(int error)
 	if (error == 0)
 		ft_putendl("error");
 	else if (error == -1)
-		ft_putendl("usage: cp source_file");
+		ft_putendl("usage: fillit input_file");
 	exit(0);
 }
