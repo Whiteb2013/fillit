@@ -1,0 +1,77 @@
+##  CURRENT  ##
+
+__CHECKER__
+check_line
+check_tetrimino
+
+__TOP_LEFT__
+square_checker
+move_top
+move_left
+
+__RESOLVER__
+dlx_size
+gen_dlx_options
+check_dlx_left
+resolve_dlx
+ft_sqrt_plus
+build_square
+
+__ERROR__
+ft_error
+
+__DLX_LIST__
+create_dlx_node_down
+create_dlx_node
+fill_dlx_node
+
+__CLEANER__
+clean_dlx_base
+clean_dlx_options
+clean_dlx
+
+__MAIN__
+show_square
+pars_input_file
+main
+
+
+##  SUGGESTION  ##
+
+__MAIN__
+//read file
+//create list
+//resolve
+//show square
+
+__READER__
+//new function made from current MAIN body
+pars_input_file
+check_line
+check_tetrimino
+
+__CREATE_LIST__
+create_dlx_node
+fill_dlx_node
+create_dlx_node_down
+square_checker
+move_top
+
+__RESOLVER__
+dlx_size
+gen_dlx_options
+check_dlx_left
+resolve_dlx
+ft_sqrt_plus
+build_square
+
+__SHOW_SQUARE__
+show_square
+
+__CLEANER__
+clean_dlx_base
+clean_dlx_options
+clean_dlx
+
+__ERROR__
+ft_error
