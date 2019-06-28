@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:26:52 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/24 22:59:01 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/28 23:53:27 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,41 @@
 
 int		create_dlx_node_down(t_dlx *node)
 {
-	t_dlx	*tmp;
 	int		i;
 	int		offset;
 
-	tmp = node;
 	i = 4;
-	while (tmp->down)
-		tmp = tmp->down;
-	if (!(offset = square_checker(tmp)))
+	while (node->down)
+		node = node->down;
+	if (!(offset = square_checker(node)))
 		return (0);
-	if (!(tmp->down = (t_dlx *)ft_memalloc(sizeof(t_dlx))))
+	if (!(node->down = (t_dlx *)ft_memalloc(sizeof(t_dlx))))
 		ft_error(0);
-	tmp->down->right = tmp->right;
-	tmp->down->left = NULL;
-	tmp->down->down = NULL;
-	tmp->down->up = tmp;
-	tmp->down->side = tmp->side;
-	tmp->down->letter = tmp->letter;
+	node->down->right = node->right;
+	node->down->left = NULL;
+	node->down->down = NULL;
+	node->down->up = node;
+	node->down->side = node->side;
+	node->down->letter = node->letter;
 	if (offset == 2)
 		while (i-- > 0)
 		{
-			tmp->down->block.y[i] = tmp->block.y[i];
-			tmp->down->block.x[i] = tmp->block.x[i] + 1;
+			node->down->block.y[i] = node->block.y[i];
+			node->down->block.x[i] = node->block.x[i] + 1;
 		}
 	else if (offset == 1)
 	{
 		while (i-- > 0)
 		{
-			tmp->down->block.x[i] = tmp->block.x[i];
-			tmp->down->block.y[i] = tmp->block.y[i] + 1;
+			node->down->block.x[i] = node->block.x[i];
+			node->down->block.y[i] = node->block.y[i] + 1;
 		}
-		move_left(tmp->down);
+		move_left(node->down);
 	}
 	return (1);
 }
 
-void	create_dlx_node(t_dlx **root)
+void	create_dlx_node_right(t_dlx **root)
 {
 	if (!*root)
 	{

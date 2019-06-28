@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 21:36:25 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/24 23:02:38 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/28 23:04:23 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	show_square(t_dlx **root)
 {
 	char	*square;
 	size_t	i;
+	t_dlx	*tmp;
 
 	i = 0;
 	square = ft_strnew(((*root)->side + 1) * (*root)->side);
@@ -26,6 +27,7 @@ void	show_square(t_dlx **root)
 			square[i] = '\n';
 		i++;
 	}
+	tmp = *root;
 	while (*root)
 	{
 		i = 4;
@@ -36,6 +38,7 @@ void	show_square(t_dlx **root)
 	}
 	ft_putstr(square);
 	ft_strdel(&square);
+	clean_dlx(tmp, 2);
 }
 
 void	pars_input_file(char *line, t_dlx **root)
@@ -50,7 +53,7 @@ void	pars_input_file(char *line, t_dlx **root)
 		if (line_counter / 4 != empty_line)
 			ft_error(0);
 		if (!(line_counter % 4))
-			create_dlx_node(root);
+			create_dlx_node_right(root);
 		fill_dlx_node(*root, line, line_counter++ % 4);
 	}
 	else if (res == 0)
@@ -70,7 +73,6 @@ int		main(int argc, char **argv)
 		ft_error(-1);
 	if ((fd = open(argv[1], O_RDONLY)) < 1)
 		ft_error(0);
-	root = NULL;
 	line = NULL;
 	while (get_next_line(fd, &line))
 	{

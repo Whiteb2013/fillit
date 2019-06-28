@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 20:36:36 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/24 21:23:14 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/28 22:33:23 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef	struct		s_dlx
 	struct s_dlx	*left;
 }					t_dlx;
 
-void				create_dlx_node(t_dlx **root);
+void				create_dlx_node_right(t_dlx **root);
 void				fill_dlx_node(t_dlx *root, char *s, size_t y);
 void				move_top(t_dlx *root);
 void				move_left(t_dlx *root);

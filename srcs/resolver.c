@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 21:50:51 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/24 23:02:10 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/28 23:31:06 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,34 @@ int		check_dlx_left(t_dlx *node)
 	return (1);
 }
 
+int		build_dlx_chain(t_dlx **node)
+{
+	if (check_dlx_left(*node))
+	{
+		if ((*node)->right)
+			(*node)->right->left = *node;
+		*node = (*node)->right;
+	}
+	else if ((*node)->down)
+	{
+		(*node)->down->left = (*node)->left;
+		*node = (*node)->down;
+	}
+	else
+	{
+		while ((*node)->left && !(*node)->left->down)
+			*node = (*node)->left;
+		if ((*node)->left && (*node)->left->down)
+		{
+			(*node)->left->down->left = (*node)->left->left;
+			*node = (*node)->left->down;
+		}
+		else
+			return (0);
+	}
+	return (1);
+}
+
 int		resolve_dlx(t_dlx **root, size_t side)
 {
 	t_dlx	*tmp;
@@ -86,29 +114,8 @@ int		resolve_dlx(t_dlx **root, size_t side)
 	while (tmp)
 	{
 		tmp_prev = tmp;
-		if (check_dlx_left(tmp))
-		{
-			if (tmp->right)
-				tmp->right->left = tmp;
-			tmp = tmp->right;
-		}
-		else if (tmp->down)
-		{
-			tmp->down->left = tmp->left;
-			tmp = tmp->down;
-		}
-		else
-		{
-			while (tmp->left && !tmp->left->down)
-				tmp = tmp->left;
-			if (tmp->left && tmp->left->down)
-			{
-				tmp->left->down->left = tmp->left->left;
-				tmp = tmp->left->down;
-			}
-			else
-				return (0);
-		}
+		if (!(build_dlx_chain(&tmp)))
+			return (0);
 	}
 	*root = tmp_prev;
 	return (1);

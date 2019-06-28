@@ -3,3 +3,6 @@ ft_error теперь void и завершает программу через e
 ft_error перенесена в main
 pos переименован в block
 square заменен на side
+функция create_dlx_node переименована в create_dlx_node_right
+в функцию show_square добавлен временный указатель на root, который используется для чистки списка перед выходом (устранен лик)
+из функции main удалена инициализация root = NULL, т.к. в create_dlx_node_right root инициализируется снова 

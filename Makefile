@@ -6,7 +6,7 @@
 #    By: gmarin <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 20:31:28 by gmarin            #+#    #+#              #
-#    Updated: 2019/06/25 20:31:51 by gmarin           ###   ########.fr        #
+#    Updated: 2019/06/28 22:41:04 by lgeorgin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,10 +33,10 @@ LFLAGS = -I$(LIB_DIR) -I$(SRC_DIR)
 all: $(NAME)
 
 bin:
-	@$(CC) $(CFLAGS) $(LFLAGS) -c $(SRCS)
+	@$(CC) -g $(CFLAGS) $(LFLAGS) -c $(SRCS)
 
 $(NAME): lib bin
-	@$(CC) $(CFLAGS) $(LFLAGS) $(OBJS) -L$(LIB_DIR) -lft -o $(NAME)
+	@$(CC) -g $(CFLAGS) $(LFLAGS) $(OBJS) -L$(LIB_DIR) -lft -o $(NAME)
 
 lib:
 	@make -C $(LIB_DIR)

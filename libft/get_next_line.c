@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 21:19:54 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/05/06 22:09:30 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/28 23:48:01 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int				get_next_line(const int fd, char **line)
 {
 	static t_list	*file_content;
 	t_list			*tmp;
+	t_list			*tmp2;
 	size_t			i;
 	int				res;
 
@@ -114,5 +115,13 @@ int				get_next_line(const int fd, char **line)
 		if (!(tmp->content = ft_strnew(0)))
 			return (-1);
 	res = ft_read_file(fd, tmp, line);
+	if (!res)
+		while (tmp)
+		{
+			tmp2 = tmp;
+			tmp = tmp->next;
+			free(tmp2->content);
+			free(tmp2);
+		}
 	return (res);
 }
