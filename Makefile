@@ -20,7 +20,8 @@ SRC_FILES =	main.c \
 			top_left.c \
 			resolver.c \
 			checker.c \
-			cleaner.c
+			cleaner.c \
+			error.c
 
 SRCS = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 OBJS = $(SRC_FILES:.c=.o)
