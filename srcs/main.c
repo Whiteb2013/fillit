@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 21:36:25 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/28 23:04:23 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/29 15:52:00 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	show_square(t_dlx **root)
 	while (*root)
 	{
 		i = 4;
-		while (i-- > 0)
+		while (i--)
 			square[((*root)->block.y[i] * ((*root)->side + 1)) + \
 				(*root)->block.x[i]] = (*root)->letter;
 		*root = (*root)->left;
@@ -39,6 +39,18 @@ void	show_square(t_dlx **root)
 	ft_putstr(square);
 	ft_strdel(&square);
 	clean_dlx(tmp, 2);
+}
+
+void	build_square(t_dlx **root)
+{
+	size_t size;
+	size_t min_side;
+
+	size = dlx_size(root);
+	if ((min_side = ft_sqrt_plus(size * 4)) < (*root)->side)
+		min_side = (*root)->side;
+	while (!resolve_dlx(root, min_side++))
+		clean_dlx(*root, 1);
 }
 
 void	pars_input_file(char *line, t_dlx **root)
@@ -51,7 +63,7 @@ void	pars_input_file(char *line, t_dlx **root)
 	if (res == 1)
 	{
 		if (line_counter / 4 != empty_line)
-			ft_error(0);
+			ft_error_dlx(*root);
 		if (!(line_counter % 4))
 			create_dlx_node_right(root);
 		fill_dlx_node(*root, line, line_counter++ % 4);
@@ -59,7 +71,7 @@ void	pars_input_file(char *line, t_dlx **root)
 	else if (res == 0)
 		empty_line++;
 	else if (res == -1)
-		ft_error(0);
+		ft_error_dlx(*root);
 }
 
 int		main(int argc, char **argv)
@@ -73,6 +85,7 @@ int		main(int argc, char **argv)
 		ft_error(-1);
 	if ((fd = open(argv[1], O_RDONLY)) < 1)
 		ft_error(0);
+	root = NULL;
 	line = NULL;
 	while (get_next_line(fd, &line))
 	{
@@ -83,7 +96,8 @@ int		main(int argc, char **argv)
 		ft_strdel(&line);
 	}
 	if (!root || flag == 't')
-		ft_error(0);
+		ft_error_dlx(root);
 	build_square(&root);
+	show_square(&root);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 17:20:22 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/24 21:23:16 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/29 15:24:48 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,47 @@ int		check_tetrimino(t_dlx *node)
 		}
 	}
 	return (sum > 2);
+}
+
+int		check_space_for_option(t_dlx *node)
+{
+	size_t	i;
+	int		offset;
+
+	i = 4;
+	offset = 1;
+	while (i-- && offset != 2)
+		if (node->block.x[i] + 1 >= node->side)
+			offset = 2;
+	if (node->block.y[3] >= node->side)
+		return (0);
+	if (offset == 2 && node->block.y[3] + 1 >= node->side)
+		return (0);
+	return (offset);
+}
+
+int		check_dlx_left(t_dlx *node)
+{
+	t_dlx	*tmp;
+	size_t	i;
+	size_t	k;
+
+	tmp = node->left;
+	while (tmp)
+	{
+		i = 4;
+		while (i--)
+		{
+			k = 4;
+			while (k--)
+			{
+				if (tmp->block.x[i] == node->block.x[k] \
+						&& tmp->block.y[i] == node->block.y[k])
+					return (0);
+			}
+		}
+		tmp = tmp->left;
+	}
+	free(tmp);
+	return (1);
 }

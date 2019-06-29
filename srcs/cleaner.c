@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/22 15:26:16 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/26 22:02:41 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/29 15:36:03 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,19 @@ void	clean_dlx_options(t_dlx *root)
 		clean_dlx_options(root->right);
 }
 
-void	clean_dlx(t_dlx *root, int mode)
+void	clean_dlx(t_dlx *node, int mode)
 {
-	if (!root)
+	if (!node)
 		return ;
-	while (root->left)
-		root = root->left;
-	while (root->up)
-		root = root->up;
+	while (node->left)
+		node = node->left;
+	while (node->up)
+		node = node->up;
 	if (mode == 1)
-		clean_dlx_options(root);
+		clean_dlx_options(node);
 	if (mode == 2)
 	{
-		clean_dlx_options(root);
-		clean_dlx_base(root);
+		clean_dlx_options(node);
+		clean_dlx_base(node);
 	}
 }

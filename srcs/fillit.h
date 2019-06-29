@@ -6,7 +6,7 @@
 /*   By: lgeorgin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/18 20:36:36 by lgeorgin          #+#    #+#             */
-/*   Updated: 2019/06/28 22:33:23 by lgeorgin         ###   ########.fr       */
+/*   Updated: 2019/06/29 15:51:14 by lgeorgin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,18 @@ typedef	struct		s_dlx
 }					t_dlx;
 
 void				create_dlx_node_right(t_dlx **root);
-void				fill_dlx_node(t_dlx *root, char *s, size_t y);
-void				move_top(t_dlx *root);
-void				move_left(t_dlx *root);
-void				ft_error(int error);
-void				build_square(t_dlx **root);
-size_t				ft_sqrt_plus(size_t nb);
 int					create_dlx_node_down(t_dlx *node);
-int					square_checker(t_dlx *node);
-void				clean_dlx(t_dlx *root, int mode);
-void				show_square(t_dlx **root);
+void				fill_dlx_node(t_dlx *node, char *s, size_t y);
+size_t				dlx_size(t_dlx **root);
+int					resolve_dlx(t_dlx **root, size_t size);
+void				move_tetrimino(t_dlx *node, int offset);
+int					check_space_for_option(t_dlx *node);
 int					check_line(char *line);
-int					check_tetrimino(t_dlx *root);
+int					check_tetrimino(t_dlx *node);
+int					check_dlx_left(t_dlx *node);
+size_t				ft_sqrt_plus(size_t nb);
+void				ft_error(int error);
+void				ft_error_dlx(t_dlx *node);
+void				clean_dlx(t_dlx *node, int mode);
 
 #endif

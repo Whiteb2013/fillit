@@ -6,7 +6,7 @@
 #    By: gmarin <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 20:31:28 by gmarin            #+#    #+#              #
-#    Updated: 2019/06/28 22:41:04 by lgeorgin         ###   ########.fr        #
+#    Updated: 2019/06/29 15:39:11 by lgeorgin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,12 @@ LIB_DIR = ./libft
 
 SRC_FILES =	main.c \
 			dlx_list.c \
-			top_left.c \
+			move_tetrimino.c \
 			resolver.c \
 			checker.c \
 			cleaner.c \
-			error.c
+			error.c \
+			ft_sqrt_plus.c
 
 SRCS = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 OBJS = $(SRC_FILES:.c=.o)
